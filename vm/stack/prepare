@@ -8,5 +8,9 @@ USER=vagrant
 apt-get update
 xargs apt-get -y install < $(dirname $0)/packages.txt
 
+# Python dependencies.
 easy_install pip
 pip install flask
+pip install pymongo
+
+service mongod start

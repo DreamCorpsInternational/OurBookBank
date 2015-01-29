@@ -1,5 +1,4 @@
 language-pack-en
 build-essential
+mongodb
 python-setuptools
-python-numpy
-python-scipy
