@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+LOG=/tmp/log/$(basename $0).log
+mkdir -p /tmp/log
+
+USER=vagrant
+
+apt-get update
+xargs apt-get -y install < $(dirname $0)/packages.txt
+
+easy_install pip
+pip install flask

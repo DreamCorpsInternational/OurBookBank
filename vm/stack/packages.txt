@@ -1,0 +1,5 @@
+language-pack-en
+build-essential
+python-setuptools
+python-numpy
+python-scipy
