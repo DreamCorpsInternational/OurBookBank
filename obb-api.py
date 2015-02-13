@@ -43,9 +43,8 @@ def login():
         return Response("{\"message\":\"Incorrect content!\"}", mimetype=json_mimetype)
 
     import os
-    os.system("curl -s --user 'api:key-85ca8274209617fbef11d4a2a18f8e4d' https://api.mailgun.net/v2/sandboxa94ddc8c9b464a23bc258ea56fb53f7b.mailgun.org/messages -F from='Mailgun Sandbox <postmaster@sandboxa94ddc8c9b464a23bc258ea56fb53f7b.mailgun.org>' -F to='Jun <j.jun.luo@gmail.com>' -F subject='Mailgun TEST!!!!!' -F text='This is an email for da API'")
 
-    os.system("curl -X POST 'https://api.twilio.com/2010-04-01/Accounts/AC8335feed73e8f0667b162bc638d14d22/Messages.json' -d 'From=+16475609905' -d 'To=+6473093872' -d 'Body=withoutquotes' -u AC8335feed73e8f0667b162bc638d14d22:f71a5272be1e942c449459f661b77b88")
+    # do stuff here!
 
     usersCollection = db.users
     found = usersCollection.find({ 'username' : user})
