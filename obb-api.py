@@ -58,4 +58,4 @@ def getPicks():
     return Response(result_json, mimetype=json_mimetype)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0') # Allow connections from outside the VM. 

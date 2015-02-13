@@ -13,4 +13,4 @@ easy_install pip
 pip install flask
 pip install pymongo
 
-service mongod start
+service mongodb start
