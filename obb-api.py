@@ -1,5 +1,10 @@
 import logging
 import sys
+from configparser import ConfigParser
+
+# Get configurable auth info.
+config = ConfigParser()
+config.readfp(open("obb.cfg"))
 
 # Avoid failure to find flask module: 
 sys.path.insert(0, '/Library/Python/2.7/site-packages')
@@ -24,11 +29,11 @@ json_mimetype = 'application/json'
 
 @app.route('/auth', methods=['POST'])
 def login():
-    log = logging.getLogger('werkzeug')
+#    log = logging.getLogger('werkzeug')
     requestDict = request.json
     # JSON is None if content type is not application/json.
 
-    log.debug('The dict is: ' + str(requestDict))
+    logging.debug('The dict is: ' + str(requestDict))
 
     if requestDict is None:
         return Response("{\"message\":\"Incorrect content type header!\"}", mimetype=json_mimetype)
@@ -44,7 +49,18 @@ def login():
 
     import os
 
-    # do stuff here!
+    # Twillio call.
+    targetURI = config.get("twillioCredentials", "targetURI")
+    fromNumber = config.get("twillioCredentials", "fromNumber")
+    baCredentials = config.get("twillioCredentials", "basicAuthCredentials")
+  
+    body = "bla bla"
+    toNumber = "+6473093872"
+
+    curlCommand = "curl -X POST '" + targetURI + "' -d 'From=" + fromNumber + "' -d 'To=" + toNumber + "' -d 'Body=" + body + "' -u " + baCredentials
+
+    logging.debug("Calling system command: " + curlCommand)
+    os.system(curlCommand)
 
     usersCollection = db.users
     found = usersCollection.find({ 'username' : user})
@@ -71,7 +87,7 @@ def addBook():
     requestDict = request.json
     # JSON is None if content type is not application/json.
 
-    log.debug('The dict is: ' + str(requestDict))
+    logging.debug('The dict is: ' + str(requestDict))
 
     if requestDict is None:
         return Response("{\"message\":\"Incorrect content type header!\"}", mimetype=json_mimetype)
@@ -94,4 +110,5 @@ def getPicks():
     return Response(result_json, mimetype=json_mimetype)
 
 if __name__ == "__main__":
+    logging.basicConfig(filename='obb.log', level=logging.DEBUG)
     app.run(host='0.0.0.0') # Allow connections from outside the VM. 
